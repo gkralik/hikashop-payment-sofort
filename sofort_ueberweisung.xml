@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension method="upgrade" version="3.0" type="plugin" group="hikashoppayment">
+    <name>Hikashop SOFORT Überweisung Payment Plugin</name>
+    <author>Gregor Kralik</author>
+    <creationDate>2016-06-15</creationDate>
+    <version>1.0.0</version>
+    <copyright>(C) 2016 Gregor Kralik</copyright>
+    <license>GNU LGPL</license>
+    <authorEmail>g.kralik@gmail.com</authorEmail>
+    <authorUrl>https://github.com/gkralik</authorUrl>
+    <description>This plugin enables you to setup your SOFORT Überweisung payment system.</description>
+    <files>
+        <filename plugin="sofort_ueberweisung">sofort_ueberweisung.php</filename>
+        <filename>sofort_ueberweisung_end.php</filename>
+        <filename>library/sofort.php</filename>
+        <filename>library/Sofort/SofortLib/AbstractDataHandler.php</filename>
+        <filename>library/Sofort/SofortLib/AbstractHttp.php</filename>
+        <filename>library/Sofort/SofortLib/AbstractLoggerHandler.php</filename>
+        <filename>library/Sofort/SofortLib/AbstractWrapper.php</filename>
+        <filename>library/Sofort/SofortLib/BillcodeDetails.php</filename>
+        <filename>library/Sofort/SofortLib/Billcode.php</filename>
+        <filename>library/Sofort/SofortLib/Factory.php</filename>
+        <filename>library/Sofort/SofortLib/FileLogger.php</filename>
+        <filename>library/Sofort/SofortLib/HttpCurl.php</filename>
+        <filename>library/Sofort/SofortLib/HttpSocket.php</filename>
+        <filename>library/Sofort/SofortLib/IdealBanks.php</filename>
+        <filename>library/Sofort/SofortLib/IdealNotification.php</filename>
+        <filename>library/Sofort/SofortLib/Ideal.php</filename>
+        <filename>library/Sofort/SofortLib/Multipay.php</filename>
+        <filename>library/Sofort/SofortLib/Notification.php</filename>
+        <filename>library/Sofort/SofortLib/PaycodeAbstract.php</filename>
+        <filename>library/Sofort/SofortLib/PaycodeDetailsAbstract.php</filename>
+        <filename>library/Sofort/SofortLib/PaycodeDetails.php</filename>
+        <filename>library/Sofort/SofortLib/Paycode.php</filename>
+        <filename>library/Sofort/SofortLib/Refund.php</filename>
+        <filename>library/Sofort/SofortLib/Sofortueberweisung.php</filename>
+        <filename>library/Sofort/SofortLib/TransactionData.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/ArrayToXmlException.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/ArrayToXml.php</filename>
+        <filename>library/Sofort/SofortLib/XmlDataHandler.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/Element/Element.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/Element/Tag.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/Element/Text.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/XmlToArrayException.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/XmlToArrayNode.php</filename>
+        <filename>library/Sofort/SofortLib/Xml/XmlToArray.php</filename>
+    </files>
+    <params addpath="/components/com_hikashop/params">
+        <param name="pluginoptions" type="pluginoptions" default="plugin" label="hikashop"
+               description="Hikashop options"/>
+    </params>
+    <config>
+        <fields name="params" addfieldpath="/components/com_hikashop/fields">
+            <fieldset name="basic">
+                <field id="pluginoptions" name="pluginoptions" type="pluginoptions" label="hikashop"
+                       description="Hikashop options"/>
+            </fieldset>
+        </fields>
+    </config>
+</extension>
