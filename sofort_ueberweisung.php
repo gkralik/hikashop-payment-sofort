@@ -103,6 +103,7 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
 
         // set up transaction
         $transaction = new \Sofort\SofortLib\Sofortueberweisung($this->payment_params->sofort_config_key);
+        $transaction->setApiVersion('2.0');
         $transaction->setAmount($amount);
         $transaction->setCurrencyCode($this->currency->currency_code);
         $transaction->setReason($order->order_number);
@@ -155,6 +156,7 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
         // get transaction details
         $transactionData = new \Sofort\SofortLib\TransactionData($this->payment_params->sofort_config_key);
         $transactionData->addTransaction($transactionId);
+        $transactionData->setApiVersion('2.0');
         $transactionData->sendRequest();
 
         // extract user variables
