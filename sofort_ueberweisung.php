@@ -206,7 +206,11 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
             return false;
         }
 
-        if ($transactionData->getStatus() != 'received') {
+        if ($transactionData->getStatus() != 'received'
+            && !($transactionData->getStatus() == 'untraceable' // if it is a test, act as if the payment was successful
+                && $transactionData->isTest()
+                && $this->plugin_params->debug == 1)
+        ) {
             $orderStatus = 'created';
 
             $email = new stdClass();
