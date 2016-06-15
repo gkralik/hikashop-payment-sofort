@@ -10,7 +10,8 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * SOFORT Überweisung payment provider for Hikashop
  *
- * @property $payment_params Plugin parameters.
+ * @property $payment_params Payment parameters.
+ * @property $plugin_params  Plugin params.
  * @property $currency       Currency information.
  * @property $url_itemid     Item url component.
  * @property $redirect_url   Redirect URL.
@@ -73,7 +74,7 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
      *
      * @return bool
      */
-    function onAfterOrderConfirm(&$order, &$methods, $method_id)
+    public function onAfterOrderConfirm(&$order, &$methods, $method_id)
     {
         parent::onAfterOrderConfirm($order, $methods, $method_id);
 
@@ -142,7 +143,7 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
      *
      * @return bool
      */
-    function onPaymentNotification(&$statuses)
+    public function onPaymentNotification(&$statuses)
     {
         // get plugin parameters
         $this->pluginParams();
@@ -154,7 +155,7 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
         $transactionId = $notification->getTransactionId();
 
         // get transaction details
-        $transactionData = new \Sofort\SofortLib\TransactionData($this->payment_params->sofort_config_key);
+        $transactionData = new \Sofort\SofortLib\TransactionData($this->plugin_params->sofort_config_key);
         $transactionData->addTransaction($transactionId);
         $transactionData->setApiVersion('2.0');
         $transactionData->sendRequest();
@@ -241,7 +242,7 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
      *
      * @param object $element
      */
-    function getPaymentDefaultValues(&$element)
+    public function getPaymentDefaultValues(&$element)
     {
         $element->payment_name = 'SOFORT';
         $element->payment_description = 'Pay with SOFORT Überweisung';
