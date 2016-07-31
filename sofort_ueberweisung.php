@@ -207,11 +207,31 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
             return false;
         }
 
-        if ($transactionData->getStatus() != 'received'
-            && !($transactionData->getStatus() == 'untraceable' // if it is a test, act as if the payment was successful
-                && $transactionData->isTest()
-                && $this->plugin_params->debug == 1)
-        ) {
+        // a transaction is successful if it has
+        //    status untraceable with status_reason sofort_bank_account_needed
+        //    OR
+        //    status pending with status_reason not_credited_yet
+
+        if (($transactionData->getStatus() == 'untraceable' && $transactionData->getStatusReason() == 'sofort_bank_account_needed')
+            || ($transactionData->getStatus() == 'pending' && $transactionData->getStatusReason() == 'not_credited_yet'))
+        {
+            // successful
+            $orderStatus = $this->payment_params->verified_status;
+            $history->history_data = 'SOFORT transaction ID: ' . $transactionId;
+            $history->notified = 1;
+
+            $email = new stdClass();
+            $email->subject = JText::sprintf('PAYMENT_NOTIFICATION_FOR_ORDER', 'Sofort', $transactionData->getStatus(),
+                $dbOrder->order_number);
+            $email->body =
+                str_replace('<br/>', "\r\n", JText::sprintf('PAYMENT_NOTIFICATION_STATUS', 'Sofort', $orderStatus)) . ' '
+                . JText::sprintf('ORDER_STATUS_CHANGED', $orderStatus) . "\r\n\r\n" . $transactionData->getStatusReason();
+
+            $this->modifyOrder($orderId, $orderStatus, $history, $email);
+
+            return true;
+        } else {
+            // not successful
             $orderStatus = 'created';
 
             $email = new stdClass();
@@ -225,21 +245,6 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
 
             return false;
         }
-
-        $orderStatus = $this->payment_params->verified_status;
-        $history->history_data = 'SOFORT transaction ID: ' . $transactionId;
-        $history->notified = 1;
-
-        $email = new stdClass();
-        $email->subject = JText::sprintf('PAYMENT_NOTIFICATION_FOR_ORDER', 'Sofort', $transactionData->getStatus(),
-            $dbOrder->order_number);
-        $email->body =
-            str_replace('<br/>', "\r\n", JText::sprintf('PAYMENT_NOTIFICATION_STATUS', 'Sofort', $orderStatus)) . ' '
-            . JText::sprintf('ORDER_STATUS_CHANGED', $orderStatus) . "\r\n\r\n" . $transactionData->getStatusReason();
-
-        $this->modifyOrder($orderId, $orderStatus, $history, $email);
-
-        return true;
     }
 
     /**
