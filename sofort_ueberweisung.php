@@ -92,7 +92,7 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
 
         // set up cancel URL
         if (empty($this->payment_params->cancel_url)) {
-            $cancelUrl = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=order&task=cancel_order';
+            $cancelUrl = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=order&task=cancel_order&order_id='.$order->order_id.$this->url_itemid;
         } else {
             $cancelUrl = $this->payment_params->cancel_url;
         }
@@ -170,7 +170,8 @@ class plgHikashoppaymentSofort_ueberweisung extends hikashopPaymentPlugin
 
         global $Itemid;
         $this->url_itemid = empty($Itemid) ? '' : '&Itemid=' . $Itemid;
-        $cancelUrl = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=order&task=cancel_order' . $this->url_itemid;
+
+        $cancelUrl = HIKASHOP_LIVE . 'index.php?option=com_hikashop&ctrl=order&task=cancel_order&order_id='.$orderId.$this->url_itemid;
 
         if (empty($this->payment_params)) {
             $this->redirect_url = $cancelUrl;
