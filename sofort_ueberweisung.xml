@@ -12,7 +12,6 @@
     <files>
         <filename plugin="sofort_ueberweisung">sofort_ueberweisung.php</filename>
         <filename>sofort_ueberweisung_end.php</filename>
-        <filename>library/sofort.php</filename>
         <filename>library/Sofort/SofortLib/AbstractDataHandler.php</filename>
         <filename>library/Sofort/SofortLib/AbstractHttp.php</filename>
         <filename>library/Sofort/SofortLib/AbstractLoggerHandler.php</filename>
